@@ -1,6 +1,10 @@
 from PIL import Image
 import termcolor
 import math
+figure=" "
+regular=" "
+em = " "
+en = " "
 scale = ["█","▓","▒", "░", " "]
 colors = ["grey", "red", "green", "yellow", "blue", "magenta" ,"cyan", "white"]
 def contrast(fullpixel):
@@ -11,6 +15,7 @@ def variance(fullpixel):
     #return math.sqrt(((fullpixel[0]-avrg)*(fullpixel[0]-avrg)+(fullpixel[1]-avrg)*(fullpixel[1]-avrg)+(fullpixel[2]-avrg)*(fullpixel[2]-avrg))/2)
     return ((fullpixel[0]-avrg)+(fullpixel[1]-avrg)+(fullpixel[2]-avrg))/3
 def color(fullpixel):
+
     threshhold = contrast(fullpixel)
     color_index = 0
     varians = variance(fullpixel)
@@ -23,9 +28,11 @@ def color(fullpixel):
     return colors[color_index]
 
 
-def main(filename, dither=True, inverse = False, pixelWidth = 2):
+def main(filename, dither=True, inverse = False, pixelWidth = 2,space=""):
     image = Image.open(filename).convert("RGB")
     imgdump = image.load()
+    if space != "":
+        scale[4] = space
     for y in range(image.height):
         string = ""
         for x in range(image.width):
